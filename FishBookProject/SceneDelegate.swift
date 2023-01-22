@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  FishBookProject
 //
-//  Created by Nazlı Bekeç on 20.01.2023.
+//  Created by Nazlı Bekeç on 21.01.2023.
 //
 
 import UIKit

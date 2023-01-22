@@ -2,27 +2,28 @@
 //  ViewController.swift
 //  FishBookProject
 //
-//  Created by Nazlı Bekeç on 20.01.2023.
+//  Created by Nazlı Bekeç on 21.01.2023.
 //
 
 import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tabelView: UITableView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         
         
-        navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(addButton))
+        //Add NavigationBar Button
+        navigationController?.navigationBar.topItem?.rightBarButtonItem  = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(addButtonClicked))
         
     
+        
     }
-    
-    
-    @objc func addButton(){
+    @objc func addButtonClicked(){
         performSegue(withIdentifier: "toDetailsVC", sender: nil)
     }
 
