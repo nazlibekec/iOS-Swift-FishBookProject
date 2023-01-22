@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -31,12 +32,11 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         imageView.isUserInteractionEnabled = true
         let imageTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(selectImage))
         imageView.addGestureRecognizer(imageTapRecognizer)
+        
+        
     }
     
     
-    
-    @IBAction func saveClickedButton(_ sender: Any) {
-    }
     @objc func hideKeyboard(){
         view.endEditing(true)
     }
@@ -48,10 +48,41 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         picker.allowsEditing = true
         present(picker, animated: true)
     }
+    
     //Add Image
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         imageView.image = info[.originalImage] as? UIImage
         self.dismiss(animated: true)
+    }
         
+
+    @IBAction func saveClickedButton(_ sender: Any) {
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let context = appDelegate?.persistentContainer.viewContext
+        let newPainting = NSEntityDescription.insertNewObject(forEntityName: "Paintings", into: context!)
+        
+        
+        //Attributes
+        
+        newPainting.setValue(nameText.text!, forKey: "name")
+        
+        if let lifeTime = Int(lifeTimeText.text!) {
+            newPainting.setValue(lifeTime, forKey: "lifetime")
+        }
+        newPainting.setValue(UUID(), forKey: "id")
+        
+        let data = imageView.image!.jpegData(compressionQuality: 0.5)
+        newPainting.setValue(data, forKey: "image")
+        
+        do {
+            try context?.save()
+            print("success")
+        } catch {
+            print("error")
+        }
+        
+       
     }
 }
