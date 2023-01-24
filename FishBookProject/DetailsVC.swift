@@ -46,14 +46,14 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         picker.delegate = self
         picker.sourceType = .photoLibrary
         picker.allowsEditing = true
-        present(picker, animated: true)
+        present(picker, animated: true, completion: nil)
     }
     
     //Add Image
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         imageView.image = info[.originalImage] as? UIImage
-        self.dismiss(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
         
 
@@ -83,6 +83,9 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             print("error")
         }
         
-       
+        
+        NotificationCenter.default.post(name: NSNotification.Name("newData"), object: nil)
+        self.navigationController?.popViewController(animated: true)
+        
     }
 }
