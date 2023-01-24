@@ -11,17 +11,61 @@ import CoreData
 class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var imageView: UIImageView!
-    
     @IBOutlet weak var nameText: UITextField!
-    
     @IBOutlet weak var lifeTimeText: UITextField!
     
+    
+    var chosenPainting = ""
+    var chosenPaintingId : UUID?
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if chosenPainting != ""{
+            //Core Data
+            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Paintings")
+            
+            let idString = chosenPaintingId?.uuidString
+            
+            fetchRequest.predicate = NSPredicate(format: "id = %@", idString!)
+            fetchRequest.returnsObjectsAsFaults = false
+            
+            do{
+               let results = try context.fetch(fetchRequest)
+            
+                if results.count > 0 {
+                    for result in results as! [NSManagedObject] {
+                        
+                        if let name = result.value(forKey: "name") as? String {
+                            nameText.text = name
+                        }
+                        if let lifeTime = result.value(forKey: "lifetime") as? Int {
+                            lifeTimeText.text = String(lifeTime)
+                        }
+                        if let imageData = result.value(forKey: "image") as? Data {
+                            imageView.image = UIImage(data: imageData)
+                        }
+                        
+                    }
+                            
+                }
+                
+            } catch {
+                print("error")
+            }
+            
+            
+        } else {
+            
+        }
+        
+        
         
         //Recognizer
         //Hide Keyboard
