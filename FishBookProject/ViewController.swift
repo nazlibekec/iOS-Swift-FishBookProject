@@ -122,5 +122,69 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         performSegue(withIdentifier: "toDetailsVC", sender: nil)
     }
     
+    // Delete
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            //Core Data dan veriyi bulup silme işlemi.
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Paintings")
+            
+            let idString = idArray[indexPath.row].uuidString
+            
+            fetchRequest.predicate = NSPredicate(format: "id = %@", idString)
+            
+            fetchRequest.returnsObjectsAsFaults = false
+            
+            
+            
+            do {
+                let results = try context.fetch(fetchRequest)
+                if results.count > 0 {
+                    
+                    for result in results as! [NSManagedObject]{
+                        
+                        if let id = result.value(forKey: "id") as? UUID{
+                            
+                            if id == idArray[indexPath.row] {
+                                
+                                context.delete(result)
+                                
+                                
+                                // dizileri temizle.
+                                nameArray.remove(at: indexPath.row)
+                                idArray.remove(at: indexPath.row)
+                                
+                                //tableview ın son halini göster
+                                self.tabelView.reloadData()
+                                
+                                do {
+                                    try context.save()
+                                } catch {
+                                    print("error")
+                                }
+                                
+                                // aradığımı bulup siliyorsam for loop u durdur demek.
+                                
+                                break
+                                
+                            }
+                        }
+                    }
+                }
+                
+            } catch{
+                print("error")
+            }
+            
+            
+        }
+    }
+    
+    
+    
 }
 
