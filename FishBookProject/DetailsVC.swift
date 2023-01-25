@@ -28,6 +28,7 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             // Save butonunu pasife getir.
             
             saveButton.isEnabled = false
+            saveButton.isHidden = true
             
             //Core Data
             
@@ -55,7 +56,9 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
                             nameText.text = name
                         }
                         if let lifeTime = result.value(forKey: "lifetime") as? Int {
-                            lifeTimeText.text = String(lifeTime)
+                            lifeTimeText.text = String("Yaşam Süresi: \(lifeTime) yıl")
+                            
+                            
                         }
                         if let imageData = result.value(forKey: "image") as? Data {
                             imageView.image = UIImage(data: imageData)

@@ -130,15 +130,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             //Core Data dan veriyi bulup silme işlemi.
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let context = appDelegate.persistentContainer.viewContext
-            
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Paintings")
-            
             let idString = idArray[indexPath.row].uuidString
             
             fetchRequest.predicate = NSPredicate(format: "id = %@", idString)
-            
             fetchRequest.returnsObjectsAsFaults = false
-            
             
             
             do {
