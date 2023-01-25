@@ -33,8 +33,12 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             
             let idString = chosenPaintingId?.uuidString
             
+            // formata göre veri çekme işlemi  -Filtreleme
+            
             fetchRequest.predicate = NSPredicate(format: "id = %@", idString!)
             fetchRequest.returnsObjectsAsFaults = false
+            
+            // çektiğimiz id yi gösterme işlemi
             
             do{
                let results = try context.fetch(fetchRequest)
@@ -51,20 +55,14 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
                         if let imageData = result.value(forKey: "image") as? Data {
                             imageView.image = UIImage(data: imageData)
                         }
-                        
                     }
-                            
                 }
-                
             } catch {
                 print("error")
             }
             
-            
         } else {
-            
         }
-        
         
         
         //Recognizer
@@ -76,7 +74,6 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         imageView.isUserInteractionEnabled = true
         let imageTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(selectImage))
         imageView.addGestureRecognizer(imageTapRecognizer)
-        
         
     }
     

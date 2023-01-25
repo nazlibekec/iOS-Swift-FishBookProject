@@ -21,7 +21,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         tabelView.delegate = self
         tabelView.dataSource = self
         
@@ -79,6 +78,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     @objc func addButtonClicked(){
+        
+        //Segue yapmadan önce selectedPainting boş + ya tıklanmıştır.
+        
         selectedPainting = ""
         performSegue(withIdentifier: "toDetailsVC", sender: nil)
     }
@@ -100,16 +102,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        //verileri aktardık.
+        
         if segue.identifier == "toDetailsVC" {
             let destinationVC = segue.destination as! DetailsVC
             destinationVC.chosenPainting = selectedPainting
             destinationVC.chosenPaintingId = selectedPaintingId
-            
         }
     }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        //Segue yapmadan önce isme tıklandığını belirtir.
+        
         selectedPainting = nameArray[indexPath.row]
         selectedPaintingId = idArray[indexPath.row]
         performSegue(withIdentifier: "toDetailsVC", sender: nil)
