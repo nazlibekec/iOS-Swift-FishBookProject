@@ -106,6 +106,7 @@
                         <outlet property="imageView" destination="ROP-us-Q1E" id="iia-tX-j1B"/>
                         <outlet property="lifeTimeText" destination="ROF-7X-Q7E" id="zAS-dI-jsi"/>
                         <outlet property="nameText" destination="qg6-l4-TUt" id="noB-FK-uUq"/>
+                        <outlet property="saveButton" destination="Ti9-YH-WnV" id="C4e-p1-OtW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mcp-l1-dOl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

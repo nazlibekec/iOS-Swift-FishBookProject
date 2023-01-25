@@ -13,7 +13,7 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameText: UITextField!
     @IBOutlet weak var lifeTimeText: UITextField!
-    
+    @IBOutlet weak var saveButton: UIButton!
     
     var chosenPainting = ""
     var chosenPaintingId : UUID?
@@ -24,6 +24,11 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         super.viewDidLoad()
 
         if chosenPainting != ""{
+            
+            // Save butonunu pasife getir.
+            
+            saveButton.isEnabled = false
+            
             //Core Data
             
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -62,6 +67,9 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             }
             
         } else {
+            
+            saveButton.isEnabled = false
+            saveButton.isHidden = false
         }
         
         
@@ -94,6 +102,11 @@ class DetailsVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         imageView.image = info[.originalImage] as? UIImage
+        
+        //Görsel seçtiğinde Save butonunu aktif et
+        
+        saveButton.isEnabled = true
+        
         self.dismiss(animated: true, completion: nil)
     }
         
